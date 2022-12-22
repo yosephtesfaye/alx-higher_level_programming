@@ -6,56 +6,23 @@ import MySQLdb
 
 from sys import argv
 
-
-
 if __name__ == "__main__":
 
-        # argv[1] = username, [2] = password, [3] = database
+        db = MySQLdb.connect(host="localhost",port=3306,
+                                              user=argv[1],
+                                             passwd=argv[2],
+                                              db=argv[3])
 
-            db = MySQLdb.connect(user=argv[1], passwd=argv[2], db=argv[3],
+            cursor = db.cursor()
 
-                                             host="localhost", port=3306)
+                cursor.execute("SELECT * FROM states")
 
-                # host="localhost"(default), port=3306(default)
+                    for data in cursor.fetchall():
 
-                    cur = db.cursor()
+                                if data[1][0] == 'N':
 
-                        cur.execute("SELECT * FROM states ORDER BY id ASC;")
+                                                print(data)
 
-                            query_rows = cur.fetchall()
+                                                    cursor.close()
 
-                                for row in query_rows:
-
-                                            if row[1][0] == "N":
-
-                                                            print(row)
-
-                                                                cur.close()
-
-                                                                    db.close()
-
-
-
-                                                                    # if __name__ == "__main__":
-
-                                                                    #     # argv[1] = username, [2] = password, [3] = database
-
-                                                                    #     db = MySQLdb.connect(user=argv[1], passwd=argv[2], db=argv[3],
-
-                                                                    #                          host="localhost", port=3306)
-
-                                                                    #     # host="localhost"(default), port=3306(default)
-
-                                                                    #     cur = db.cursor()
-
-                                                                    #     cur.execute("SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id ASC;")
-
-                                                                    #     query_rows = cur.fetchall()
-
-                                                                    #     for row in query_rows:
-
-                                                                    #         print('{}'.format(row))
-
-                                                                    #     cur.close()
-
-                                                                    #     db.close()
+                                                        db.close()
