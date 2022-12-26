@@ -1,36 +1,29 @@
-
 #!/usr/bin/python3
 
-'''
-
-Get all states
-
-'''
-
-
-
-import MySQLdb
-
-from sys import argv
+""" Lists all states from databse hbtn_0e_0_usa """
 
 
 
 if __name__ == "__main__":
 
-        conn = MySQLdb.connect(host="localhost", port=3306, charset="utf8",
+    import MySQLdb
 
-                                           user=argv[1], passwd=argv[2], db=argv[3])
+    from sys import argv
 
-            cur = conn.cursor()
+    # argv[1] = username, [2] = password, [3] = database
 
-                cur.execute("SELECT * FROM states ORDER BY states.id ASC")
+    db = MySQLdb.connect(user=argv[1], passwd=argv[2], db=argv[3])
 
-                    query_rows = cur.fetchall()
+    # host="localhost"(default), port=3306(default)
 
-                        for row in query_rows:
+    cur = db.cursor()
 
-                                    print(row)
+    cur.execute("SELECT * FROM states ORDER BY id ASC")
 
-                                        cur.close()
+    query_rows = cur.fetchall()
 
-                                            conn.close()
+    for row in query_rows:
+
+        print(row)
+
+    cur.close()
