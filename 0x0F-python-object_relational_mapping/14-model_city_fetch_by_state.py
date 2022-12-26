@@ -18,26 +18,25 @@ from sqlalchemy.orm import sessionmaker
 
 if __name__ == "__main__":
 
-        engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'
+    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'
 
-                                           .format(sys.argv[1], sys.argv[2],
+                           .format(sys.argv[1], sys.argv[2],
 
-                                                                                  sys.argv[3]), pool_pre_ping=True)
+                                   sys.argv[3]), pool_pre_ping=True)
 
-                                               Base.metadata.create_all(engine)
+    Base.metadata.create_all(engine)
 
 
 
-                                                   Session = sessionmaker(bind=engine)
+    Session = sessionmaker(bind=engine)
 
-                                                       session = Session()
+    session = Session()
 
-                                                           for city, state in session.query(City, State)\
+    for city, state in session.query(City, State)\
 
-                                                                                                 .filter(City.state_id == State.id)\
+                              .filter(City.state_id == State.id)\
 
-                                                                                                                                       .order_by(City.id.asc()).all():
+                              .order_by(City.id.asc()).all():
 
-                                                                                                                                                   print("{}: ({}) {}".format(state.name, city.id, city.name))
-
-                                                                                                                                                       session.close()
+        print("{}: ({}) {}".format(state.name, city.id, city.name))
+    session.close()
