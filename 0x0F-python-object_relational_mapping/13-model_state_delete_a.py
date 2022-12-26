@@ -16,40 +16,39 @@ from sqlalchemy.orm import sessionmaker
 
 if __name__ == "__main__":
 
-        """ Engine connection
+    """ Engine connection
 
-            """
+    """
 
-                engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'
+    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'
 
-                                                   .format(sys.argv[1], sys.argv[2],
+                           .format(sys.argv[1], sys.argv[2],
 
-                                                                                          sys.argv[3]), pool_pre_ping=True)
+                                   sys.argv[3]), pool_pre_ping=True)
 
-                                                       Base.metadata.create_all(engine)
-
-
-
-                                                           """ Session handling
-
-                                                               """
+    Base.metadata.create_all(engine)
 
 
 
-                                                                   Session = sessionmaker(bind=engine)
+    """ Session handling
 
-                                                                       session = Session()
+    """
 
 
 
-                                                                           """ Deletes fields
+    Session = sessionmaker(bind=engine)
 
-                                                                               """
+    session = Session()
 
-                                                                                   session.query(State).filter(State.name.like('%a%'))\
 
-                                                                                                                   .delete(synchronize_session=False)
 
-                                                                                                                       session.commit()
+    """ Deletes fields
 
-                                                                                                                           session.close()
+    """
+
+    session.query(State).filter(State.name.like('%a%'))\
+
+                        .delete(synchronize_session=False)
+
+    session.commit()
+    session.close()
