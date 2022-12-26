@@ -16,40 +16,39 @@ from sqlalchemy.orm import sessionmaker
 
 if __name__ == "__main__":
 
-        """ Engine connection
+    """ Engine connection
 
-            """
+    """
 
-                engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'
+    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'
 
-                                                   .format(sys.argv[1], sys.argv[2],
+                           .format(sys.argv[1], sys.argv[2],
 
-                                                                                          sys.argv[3]), pool_pre_ping=True)
+                                   sys.argv[3]), pool_pre_ping=True)
 
-                                                       Base.metadata.create_all(engine)
-
-
-
-                                                           """ Session handling
-
-                                                               """
+    Base.metadata.create_all(engine)
 
 
 
-                                                                   Session = sessionmaker(bind=engine)
+    """ Session handling
 
-                                                                       session = Session()
+    """
 
 
 
-                                                                           """ Updating field
+    Session = sessionmaker(bind=engine)
 
-                                                                               """
+    session = Session()
 
-                                                                                   update = session.query(State).get(2)
 
-                                                                                       update.name = 'New Mexico'
 
-                                                                                           session.commit()
+    """ Updating field
 
-                                                                                               session.close()
+    """
+
+    update = session.query(State).get(2)
+
+    update.name = 'New Mexico'
+
+    session.commit()
+    session.close()
