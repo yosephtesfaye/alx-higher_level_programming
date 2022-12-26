@@ -29,7 +29,6 @@ if __name__ == "__main__":
     ORDER BY c.id ASC\
 
     ")
-
     query_rows = cur.fetchall()
 
     for row in query_rows:
@@ -37,3 +36,4 @@ if __name__ == "__main__":
         print(row)
 
     cur.close()
+    db.close()
