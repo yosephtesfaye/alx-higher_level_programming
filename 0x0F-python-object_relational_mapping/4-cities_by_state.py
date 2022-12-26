@@ -6,36 +6,34 @@
 
 if __name__ == "__main__":
 
-        import MySQLdb as sdb
+    import MySQLdb as sdb
 
-            from sys import argv
+    from sys import argv
 
-                # argv[1] = username, [2] = password, [3] = database, [4] = name
+    # argv[1] = username, [2] = password, [3] = database, [4] = name
 
-                    db = sdb.connect(user=argv[1], passwd=argv[2], db=argv[3])
+    db = sdb.connect(user=argv[1], passwd=argv[2], db=argv[3])
 
-                        # host="localhost"(default), port=3306(default)
+    # host="localhost"(default), port=3306(default)
 
-                            cur = db.cursor()
+    cur = db.cursor()
 
-                                cur.execute("\
+    cur.execute("\
 
-                                            SELECT c.id, c.name, s.name FROM cities AS c\
+    SELECT c.id, c.name, s.name FROM cities AS c\
 
-                                                        JOIN states AS s\
+    JOIN states AS s\
 
-                                                                    ON s.id = c.state_id\
+    ON s.id = c.state_id\
 
-                                                                                ORDER BY c.id ASC\
+    ORDER BY c.id ASC\
 
-                                                                                            ")
+    ")
 
-                                    query_rows = cur.fetchall()
+    query_rows = cur.fetchall()
 
-                                        for row in query_rows:
+    for row in query_rows:
 
-                                                    print(row)
+        print(row)
 
-                                                        cur.close()
-
-                                                            db.close()
+    cur.close()
