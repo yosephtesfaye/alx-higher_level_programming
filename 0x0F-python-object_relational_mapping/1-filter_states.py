@@ -1,12 +1,6 @@
 #!/usr/bin/python3
 
-'''
-
-Lists all states with a name starting with N
-
-'''
-
-
+""" Lists all states from database hbtn_0e_0_usa starting with N """
 
 import MySQLdb
 
@@ -16,22 +10,24 @@ from sys import argv
 
 if __name__ == "__main__":
 
+    # argv[1] = username, [2] = password, [3] = database
 
+    db = MySQLdb.connect(user=argv[1], passwd=argv[2], db=argv[3],
 
-            conn = MySQLdb.connect("localhost", argv[1], argv[2], argv[3])
+                         host="localhost", port=3306)
 
-                    cur = conn.cursor()
+    # host="localhost"(default), port=3306(default)
 
-                            cur.execute("SELECT * FROM states ORDER BY states.id ASC")
+    cur = db.cursor()
 
-                                    query_rows = cur.fetchall()
+    cur.execute("SELECT * FROM states ORDER BY id ASC;")
 
-                                            for row in query_rows:
+    query_rows = cur.fetchall()
 
-                                                                if row[1].startswith('N'):
+    for row in query_rows:
 
-                                                                                            print(row)
+        if row[1][0] == "N":
 
-                                                                                                    cur.close()
+            print(row)
 
-                                                                                                            conn.close()
+    cur.close()
